@@ -56,7 +56,7 @@ def build_ridge_plot(df, title, clip_on=(0, 24)):
 
     pal = sns.cubehelix_palette(df.g.nunique(), rot=-0.25, light=0.8)
     text_color = tuple(pal[-1])
-    g = sns.FacetGrid(df, row="g", hue="g", aspect=20, height=1.0, palette=pal)
+    g = sns.FacetGrid(df, row="g", hue="g", aspect=50, height=0.7, palette=pal)
     g.map(
         sns.kdeplot,
         "x",
@@ -112,7 +112,8 @@ def build_ridge_plot(df, title, clip_on=(0, 24)):
     g.set(xticks=list(range(0, 25, 3)), xlabel="")
     g.set(xlim=clip_on)
     g.despine(bottom=True, left=True)
-    g.fig.suptitle(title, x=0.16, y=0, color=text_color)
+    g.fig.suptitle(title, x=0.06, y=0, color=text_color)
+
     return g
 
 
@@ -122,6 +123,6 @@ if __name__ == "__main__":
     plot = (
         load_sleep_data(path)
         .pipe(build_dataset)
-        .pipe(build_ridge_plot, title="Sleep, 100 days - Benjamin Richens")
+        .pipe(build_ridge_plot, title="the first 100 days and nights")
     )
-    plot.savefig("output.svg")
+    plot.savefig("output.png", dpi=350, bbox_inches="tight", pad_inches=1)
